@@ -8,5 +8,5 @@ class Operator:
         self.typeOp = typeOp
 
    # @abstractmethod (peut etre plus tard pour faire plus propre)
-    def apply(self, letterLeft, letterRight):
-        pass
+    # def apply(self):
+        # pass
