@@ -1,3 +1,9 @@
+from srcs.Node import Node
+from srcs.Expression import Expression
+from srcs.OpAND import OpAND
+from srcs.Letter import Letter
+from srcs.Implies import Implies
+
 A = Letter("A")
 B = Letter("B")
 C = Letter("C")
@@ -25,14 +31,14 @@ nB = Node("B")
 nC = Node("C")
 nD = Node("D")
 
-nOR.l = nB
-nOR.r = nC
+nOR.left = nB
+nOR.right = nC
 
-nAND2.l = nA
-nAND2.r = nOR
+nAND2.left = nA
+nAND2.right = nOR
 
-nAND1.l = nAND2
-nAND1.r = nD
+nAND1.left = nAND2
+nAND1.right = nD
 # fin de l'example de la construction d'un arbre
 
 exp1 = Expression(nAND1)
