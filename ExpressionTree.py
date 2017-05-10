@@ -9,6 +9,7 @@ from srcs.Implies import Implies
 from srcs.OnlyIf import OnlyIf
 from srcs.Rules import Rules
 from srcs.toolsForTrees import *
+# from srcs.resolv import *
 
 # R0: C => E
 # R1: A + B + C => D
@@ -261,4 +262,19 @@ rulesBase = [rule0, rule1, rule2, rule3, rule4, rule5, rule6, rule6, rule7, rule
 # voir le papier
 factsBase = [A, B, G]
 
-printValue(nAND2R1)
+for letter in factsBase:
+	letter.setTrue()
+
+printValue(expLeftR8.node)
+
+abc = checkTypeNode(expLeftR8.node)
+if abc == expLeftR8.node.value.typeOp:
+	print ApplyRuleOnNode(expLeftR8.node)
+	# print abc
+
+# print checkTypeNode(expLeftR1.node.value)
+# print "retour de checktype :"
+# checkTypeNode(expLeftR8.node)
+# printValue(expLeftR1.node)
+
+# resolv(factsBase, rulesBase, G)
