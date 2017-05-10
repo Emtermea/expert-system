@@ -2,7 +2,7 @@ from Operator import Operator
 
 class OpAND(Operator):
     """
-        Represent le symbole "+"
+        Represente le symbole "+"
     """
     def __init__(self):
         Operator.__init__(self, "AND")

@@ -1,10 +1,14 @@
-def printValue(node):
-    if (node.left):
-        printValue(node.left)
-    if (node.right):
-        printValue(node.right)
+from Letter import Letter
+from Operator import Operator
 
-    # if typeof node == Letter:
-        # print node.value.value
-    # else:
-        # print node.value.typeOp
+def printValue(node):
+	if node.left:
+		printValue(node.left)
+	if node.right:
+		printValue(node.right)
+	try:
+		node.value.typeOp
+		print node.value.typeOp
+	except:
+		print node.value.letter
+		print node.value.value
