@@ -7,7 +7,7 @@ def printValue(node):
 	if node.right:
 		printValue(node.right)
 	try:
-		node.value.typeOp
+		# node.value.typeOp
 		print node.value.typeOp
 	except:
 		print node.value.letter
@@ -26,12 +26,12 @@ def checkTypeNode(node):
 		else:
 			return node.value.letter
 
-# def ApplyRuleOnNode(node):
+# def checkTypeNode(node):
 # 	if node.left:
-# 		ApplyRuleOnNode(node.left)
+# 		checkTypeNode(node.left)
 # 	if node.right:
-# 		ApplyRuleOnNode(node.right)
+# 		checkTypeNode(node.right)
 # 	try:
-# 		return node.value.typeOp.apply(node.left, node.right)
+# 		return node.value.typeOp
 # 	except:
-# 		pass
+# 		return node.value.letter
