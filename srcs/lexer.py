@@ -12,7 +12,9 @@ token_exprs = [
     (r'\+',         'AND'),
     (r'\|',         'OR'),
     (r'\^',          'XOR'),
-    (r'!',          'NOT')
+    (r'!',          'NOT'),
+    (r'=',         'FACT'),
+    (r'\?',         'QUERY')
 ]
 
 def lexer(str, number_line):
