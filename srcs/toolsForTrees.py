@@ -36,3 +36,8 @@ def getLetterNode(node, ValueInNode):
 	except:
 		pass
 	return ValueInNode
+
+def printRule(rule):
+	printValue(rule.leftExp.node)
+	print rule.equal.typeOp
+	printValue(rule.rightExp.node)
