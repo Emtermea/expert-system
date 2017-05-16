@@ -7,11 +7,9 @@ def printValue(node):
 	if node.right:
 		printValue(node.right)
 	try:
-		# node.value.typeOp
 		print node.value.typeOp
 	except:
 		print node.value.letter
-		# print node.value.value
 
 def checkTypeNode(node):
 	if node.left:
@@ -25,6 +23,16 @@ def checkTypeNode(node):
 			checkTypeNode(node)
 		else:
 			return node.value.letter
+
+def getTypeOpNode(node):
+	if node.left:
+		getTypeOpNode(node.left)
+	if node.right:
+		getTypeOpNode(node.right)
+	try:
+		return node.value.typeOp
+	except:
+		pass
 
 def getLetterNode(node, ValueInNode):
 	if node.left:

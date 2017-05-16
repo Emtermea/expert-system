@@ -9,6 +9,7 @@ from srcs.Implies import Implies
 from srcs.OnlyIf import OnlyIf
 from srcs.Rules import Rules
 from srcs.toolsForTrees import *
+from srcs.resolv import *
 # from srcs.resolv import *
 
 # R0: C => E
@@ -256,25 +257,45 @@ expRightR10 = Expression(nNOTR10)
 rule10 = Rules(expLeftR10, eqR10, expRightR10)
 
 # parcourir rulesBase pour trouver une regle executable // comparer rule1.exp1 avec factsBase
-rulesBase = [rule0, rule1, rule2, rule3, rule4, rule5, rule6, rule6, rule7, rule8, rule9, rule10]
+# rulesBase = [rule0, rule1, rule2, rule3, rule4, rule5, rule6, rule6, rule7, rule8, rule9, rule10]
+rulesBase = [rule1, rule2, rule3, rule4, rule5, rule6, rule6, rule7, rule8, rule9, rule10]
 
 # pour executer la regle :
 # voir le papier
 factsBase = [A, B, G]
-
 for letter in factsBase:
 	letter.setTrue()
 
-printValue(expLeftR8.node)
+# test de factsBase
+# for each in factsBase:
+# 	print each.letter
+# print factsBase[0].letter
 
-abc = checkTypeNode(expLeftR8.node)
-if abc == expLeftR8.node.value.typeOp:
-	print ApplyRuleOnNode(expLeftR8.node)
-	# print abc
+# test de checkRelevantRule
+# print checkRelevantRule(rule1, factsBase)
 
-# print checkTypeNode(expLeftR1.node.value)
-# print "retour de checktype :"
-# checkTypeNode(expLeftR8.node)
-# printValue(expLeftR1.node)
 
-# resolv(factsBase, rulesBase, G)
+ValueInNode = []
+getLetterNode(expLeftR8.node, ValueInNode)
+
+# test de findRelevantRule
+# print "lancement findRelevantRule : \n", findRelevantRule(rulesBase, factsBase)
+
+# test de applyRule
+ruleRelev = findRelevantRule(rulesBase, factsBase)
+printRule(ruleRelev)
+# print "rulesBase : ", rulesBase, " factsBase : ", factsBase
+# applyRule(ruleRelev, ValueInNode)
+# print "rulesBase : ", rulesBase, " factsBase : ", factsBase
+
+#  test de checkTypeNode
+# abc = checkTypeNode(expLeftR8.node.left)
+# if abc == expLeftR8.node.value.typeOp:
+# 	print "typeOp : ", abc
+# else:
+# 	print " letter : ", abc
+
+# resolution
+# Queries = [G, V, X]
+# for querie in Queries
+# 	resolv(factsBase, rulesBase, querie)
