@@ -70,7 +70,7 @@ expRightR1 = Expression(nDR1)
 
 rule1 = Rules(expLeftR1, eqR1, expRightR1)
 
-# R2:
+# R2: A | B => C
 eqR2 = Implies()
 oporR2 = OpOR()
 
@@ -258,7 +258,7 @@ rule10 = Rules(expLeftR10, eqR10, expRightR10)
 
 # parcourir rulesBase pour trouver une regle executable // comparer rule1.exp1 avec factsBase
 # rulesBase = [rule0, rule1, rule2, rule3, rule4, rule5, rule6, rule6, rule7, rule8, rule9, rule10]
-rulesBase = [rule1, rule2, rule3, rule4, rule5, rule6, rule6, rule7, rule8, rule9, rule10]
+rulesBase = [rule0, rule1, rule2, rule5, rule6, rule6, rule7, rule9, rule10]
 
 # pour executer la regle :
 # voir le papier
@@ -283,7 +283,7 @@ getLetterNode(expLeftR8.node, ValueInNode)
 
 # test de applyRule
 ruleRelev = findRelevantRule(rulesBase, factsBase)
-printRule(ruleRelev)
+# printRule(ruleRelev)
 # print "rulesBase : ", rulesBase, " factsBase : ", factsBase
 # applyRule(ruleRelev, ValueInNode)
 # print "rulesBase : ", rulesBase, " factsBase : ", factsBase
@@ -296,6 +296,8 @@ printRule(ruleRelev)
 # 	print " letter : ", abc
 
 # resolution
-# Queries = [G, V, X]
-# for querie in Queries
-# 	resolv(factsBase, rulesBase, querie)
+Queries = [G, V, X]
+# for querie in Queries:
+if Queries[1] in factsBase:
+	print Queries[1].letter, " is ", Queries[1].value
+resolv(factsBase, rulesBase, Queries[1])

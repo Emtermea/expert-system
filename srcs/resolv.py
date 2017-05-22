@@ -10,8 +10,31 @@ from srcs.OnlyIf import OnlyIf
 from srcs.Rules import Rules
 from srcs.toolsForTrees import *
 
-# def applyRule(rule, ValueInNode): #appliquer la regle designee comme applicable
-# 	pass
+def applyRule(RelevantRule, factsBase): #appliquer la regle applicable
+	# if RelevantRule.rightExp.node.value.letter:
+	# 	if RelevantRule.rightExp.node.value.letter in factsBase:
+	# 		pass
+	# if RelevantRule.leftExp.node.value.typeOp and RelevantRule.rightExp.node.value.letter:
+	# 	newValue = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
+	# 	RelevantRule.rightExp.node.value.value = newValue.value
+	# 	factsBase.append(RelevantRule.rightExp.node.value)
+	if RelevantRule.leftExp.node.value.typeOp and RelevantRule.rightExp.node.value.typeOp:
+		newValueL = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
+		newValueR = RelevantRule.rightExp.node.value.apply(RelevantRule.rightExp.node.left, RelevantRule.rightExp.node.right)
+		if newValueL != newValueR:
+			pass
+	elif RelevantRule.leftExp.node.value.typeOp and RelevantRule.rightExp.node.value.letter:
+		newValue = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
+		RelevantRule.rightExp.node.value = newValue
+		factsBase.append(RelevantRule.rightExp.node.value)
+	elif RelevantRule.leftExp.node.value.letter and RelevantRule.rightExp.node.value.letter:
+		RelevantRule.rightExp.node.value.value = RelevantRule.leftExp.node.value.value
+		factsBase.append(RelevantRule.rightExp.node.value)
+	elif RelevantRule.leftExp.node.value.letter and RelevantRule.rightExp.node.value.typeOp:
+		newValue = RelevantRule.rightExp.node.value.apply(RelevantRule.rightExp.node.left, RelevantRule.rightExp.node.right)
+		RelevantRule.rightExp.node.value.value = newValue.value
+		factsBase.append(RelevantRule.rightExp.node.value)
+	return factsBase
 
 def checkRelevantRule(rule, factsBase): #check si la regle est applicable
 	lettersInRule = []
@@ -33,29 +56,25 @@ def findRelevantRule(rulesBase, factsBase): # trouver la premier regle applicabl
 			return rule
 	return 0
 
-def resolvExp(exp):
-	# apply le retour de RelevantRule
-	# while il y a des expresions dans l'expleft
-		# applyInExp de lexpresion de // pour gerer les parantheses
-	# applyInExp(expleft)
-	# if applyInExp(expright) == letter
-		# la lettre de l'expright == le retour de applyInExp(left)
-
-
-def applyInExp(exp, factsBase):
-	# trouver le noeud de l'exp
-	# if (il y a un typeOp):
-	# apply en fonctiono du typeOP avec node.left et node.right
-	# return la valeur
-	# else:
-	# return la value de la letter
-
 def resolv(factsBase, rulesBase, letter): # fonction de resolution
-	RelevantRule = findRelevantRule(rulesBase, factsBase)
-	return RelevantRule
-	# while (letter not in factsBase) and RelevantRule:
-		# apply le retour de RelevantRule
-		# resolvExp
-		# push le resultat de apply dans factsBase
-		# desactivation de la regle:
-		# rulesBase.remove(RelevantRule)
+	i = 0
+	while letter not in factsBase:
+		while rulesBase:
+			print "rule n : ", i
+			RelevantRule = findRelevantRule(rulesBase, factsBase)
+			printRule(RelevantRule)
+			if RelevantRule:
+				applyRule(RelevantRule, factsBase)
+				i += 1
+				rulesBase.remove(RelevantRule)
+	for fact in factsBase:
+		print fact.letter
+		print fact.value
+
+
+# while (letter not in factsBase) and RelevantRule:
+	# apply le retour de RelevantRule
+	# resolvExp
+	# push le resultat de apply dans factsBase
+	# desactivation de la regle:
+	# rulesBase.remove(RelevantRule)
