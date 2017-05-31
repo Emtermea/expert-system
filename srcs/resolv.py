@@ -37,9 +37,7 @@ def applyRule(RelevantRule, factsBase): #appliquer la regle applicable
 
 def checkRelevantRule(rule, factsBase): #check si la regle est applicable
 	lettersInRule = []
-	print lettersInRule, "n 1"
 	getLetterNode(rule.leftExp.node, lettersInRule)
-	print lettersInRule, "n 2"
 	for letter in lettersInRule:
 		i = 0
 		while i < len(factsBase):
@@ -56,18 +54,22 @@ def findRelevantRule(rulesBase, factsBase): # trouver la premier regle applicabl
 		if checkRelevantRule(rule, factsBase):
 			return rule
 	return 0
-
+# attention if ca retourne 0
+#
 def resolv(factsBase, rulesBase, letter): # fonction de resolution
 	while letter not in factsBase:
 		while rulesBase:
 			RelevantRule = findRelevantRule(rulesBase, factsBase)
-			# printRule(RelevantRule)
+			print "retour de find rule", RelevantRule
 			if RelevantRule:
 				applyRule(RelevantRule, factsBase)
 				rulesBase.remove(RelevantRule)
-	for fact in factsBase:
-		print fact.letter
-		print fact.value
+				print "on passe par la aussi"
+			# else:
+				# faire un econdition de sortie si RelevantRule == 0
+	# for fact in factsBase:
+	# 	print fact.letter
+	# 	print fact.value
 
 
 # while (letter not in factsBase) and RelevantRule:
