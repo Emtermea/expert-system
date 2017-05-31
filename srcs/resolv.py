@@ -11,34 +11,35 @@ from srcs.Rules import Rules
 from srcs.toolsForTrees import *
 
 def applyRule(RelevantRule, factsBase): #appliquer la regle applicable
-	# if RelevantRule.rightExp.node.value.letter:
-	# 	if RelevantRule.rightExp.node.value.letter in factsBase:
-	# 		pass
-	# if RelevantRule.leftExp.node.value.typeOp and RelevantRule.rightExp.node.value.letter:
-	# 	newValue = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
-	# 	RelevantRule.rightExp.node.value.value = newValue.value
-	# 	factsBase.append(RelevantRule.rightExp.node.value)
-	if RelevantRule.leftExp.node.value.typeOp and RelevantRule.rightExp.node.value.typeOp:
-		newValueL = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
-		newValueR = RelevantRule.rightExp.node.value.apply(RelevantRule.rightExp.node.left, RelevantRule.rightExp.node.right)
-		if newValueL != newValueR:
-			pass
-	elif RelevantRule.leftExp.node.value.typeOp and RelevantRule.rightExp.node.value.letter:
-		newValue = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
-		RelevantRule.rightExp.node.value = newValue
-		factsBase.append(RelevantRule.rightExp.node.value)
-	elif RelevantRule.leftExp.node.value.letter and RelevantRule.rightExp.node.value.letter:
-		RelevantRule.rightExp.node.value.value = RelevantRule.leftExp.node.value.value
-		factsBase.append(RelevantRule.rightExp.node.value)
-	elif RelevantRule.leftExp.node.value.letter and RelevantRule.rightExp.node.value.typeOp:
-		newValue = RelevantRule.rightExp.node.value.apply(RelevantRule.rightExp.node.left, RelevantRule.rightExp.node.right)
-		RelevantRule.rightExp.node.value.value = newValue.value
-		factsBase.append(RelevantRule.rightExp.node.value)
+	if isinstance(RelevantRule.leftExp.node.value, Operator): # si a gauche il y a une op
+		if isinstance(RelevantRule.rightExp.node.value, Letter): # si a droite c'est une letter
+			if (RelevantRule.rightExp.node.value.letter not in factsBase): # si la letter n'est pas connue
+				print "unknow letter right -> not in factsBase ==> need to apply typeOp"
+				newValue = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
+				RelevantRule.rightExp.node.value = newValue
+				factsBase.append(RelevantRule.rightExp.node.value)
+			else: # si la letter est connue
+				# comparer le resultat de apply avec la valeur de la letter connue
+				print "letter right in factsBase"
+		else: # si a droite il y a une op a faire
+			print "RelevantRule.rightExp.node.value is TYPEOP, need to call again function"
+	else: # si a gauche c'est une letter
+		if isinstance(RelevantRule.rightExp.node.value, Letter):
+			if (RelevantRule.rightExp.node.value.letter in factsBase):
+				# comparer la valeur de left avec la valeur de la letter connue
+				print "letter right in factsBase"
+			else:
+				# la valeur de right est egale a celle de gauche
+				print "la valeur inconnue prend la valeur de la connue"
+		else:
+			print "RelevantRule.rightExp.node.value is a typeOp, need to call again function"
 	return factsBase
 
 def checkRelevantRule(rule, factsBase): #check si la regle est applicable
 	lettersInRule = []
+	print lettersInRule, "n 1"
 	getLetterNode(rule.leftExp.node, lettersInRule)
+	print lettersInRule, "n 2"
 	for letter in lettersInRule:
 		i = 0
 		while i < len(factsBase):
@@ -57,15 +58,12 @@ def findRelevantRule(rulesBase, factsBase): # trouver la premier regle applicabl
 	return 0
 
 def resolv(factsBase, rulesBase, letter): # fonction de resolution
-	i = 0
 	while letter not in factsBase:
 		while rulesBase:
-			print "rule n : ", i
 			RelevantRule = findRelevantRule(rulesBase, factsBase)
-			printRule(RelevantRule)
+			# printRule(RelevantRule)
 			if RelevantRule:
 				applyRule(RelevantRule, factsBase)
-				i += 1
 				rulesBase.remove(RelevantRule)
 	for fact in factsBase:
 		print fact.letter

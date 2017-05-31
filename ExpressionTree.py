@@ -282,7 +282,7 @@ getLetterNode(expLeftR8.node, ValueInNode)
 # print "lancement findRelevantRule : \n", findRelevantRule(rulesBase, factsBase)
 
 # test de applyRule
-ruleRelev = findRelevantRule(rulesBase, factsBase)
+# ruleRelev = findRelevantRule(rulesBase, factsBase)
 # printRule(ruleRelev)
 # print "rulesBase : ", rulesBase, " factsBase : ", factsBase
 # applyRule(ruleRelev, ValueInNode)
@@ -300,4 +300,5 @@ Queries = [G, V, X]
 # for querie in Queries:
 if Queries[1] in factsBase:
 	print Queries[1].letter, " is ", Queries[1].value
+print "la premiere requete est : ", Queries[1].letter
 resolv(factsBase, rulesBase, Queries[1])
