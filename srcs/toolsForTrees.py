@@ -42,8 +42,7 @@ def getLetterNode(node, ValueInNode):
 	try:
 		ValueInNode.append(node.value.letter)
 	except:
-		pass
-	return ValueInNode
+		return ValueInNode
 
 def printRule(rule):
 	printValue(rule.leftExp.node)
