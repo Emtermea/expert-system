@@ -1,3 +1,4 @@
+import sys
 from srcs.Node import Node
 from srcs.Expression import Expression
 from srcs.OpAND import OpAND
@@ -10,17 +11,30 @@ from srcs.OnlyIf import OnlyIf
 from srcs.Rules import Rules
 from srcs.toolsForTrees import *
 
+def applyOp(nodeLeft, nodeRight, factsBase, bool): # applique la fonction apply de l'operateur si a droite c'est une letter inconnue
+	newValue = nodeLeft.value.apply(nodeLeft.left, nodeLeft.right)
+	if bool:
+		nodeRight.value.value = newValue.value
+		factsBase.append(nodeRight.value)
+	return newValue.value
+
 def applyRule(RelevantRule, factsBase): #appliquer la regle applicable
+	for fact in factsBase:
+		print fact.letter
 	if isinstance(RelevantRule.leftExp.node.value, Operator): # si a gauche il y a une op
 		if isinstance(RelevantRule.rightExp.node.value, Letter): # si a droite c'est une letter
-			if (RelevantRule.rightExp.node.value.letter not in factsBase): # si la letter n'est pas connue
-				print "unknow letter right -> not in factsBase ==> need to apply typeOp"
-				newValue = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
-				RelevantRule.rightExp.node.value = newValue
-				factsBase.append(RelevantRule.rightExp.node.value)
+			if (RelevantRule.rightExp.node.value not in factsBase): # si la letter n'est pas connue
+				applyOp(RelevantRule.leftExp.node, RelevantRule.rightExp.node, factsBase, 1)
+				# newValue = RelevantRule.leftExp.node.value.apply(RelevantRule.leftExp.node.left, RelevantRule.leftExp.node.right)
+				# RelevantRule.rightExp.node.value.value = newValue.value
+				# factsBase.append(RelevantRule.rightExp.node.value)
 			else: # si la letter est connue
 				# comparer le resultat de apply avec la valeur de la letter connue
 				print "letter right in factsBase"
+				if applyOp(RelevantRule.leftExp.node, RelevantRule.rightExp.node, factsBase, 0) == RelevantRule.rightExp.node.value.value:
+					print "everything is alright"
+				else:
+					print "conflict"
 		else: # si a droite il y a une op a faire
 			print "RelevantRule.rightExp.node.value is TYPEOP, need to call again function"
 	else: # si a gauche c'est une letter
@@ -55,18 +69,27 @@ def findRelevantRule(rulesBase, factsBase): # trouver la premier regle applicabl
 			return rule
 	return 0
 # attention if ca retourne 0
-#
+
 def resolv(factsBase, rulesBase, letter): # fonction de resolution
+	i = 0
 	while letter not in factsBase:
-		while rulesBase:
-			RelevantRule = findRelevantRule(rulesBase, factsBase)
-			print "retour de find rule", RelevantRule
-			if RelevantRule:
-				applyRule(RelevantRule, factsBase)
-				rulesBase.remove(RelevantRule)
-				print "on passe par la aussi"
-			# else:
-				# faire un econdition de sortie si RelevantRule == 0
+		while rulesBase and (i < len(rulesBase)):
+			print "i = ", i
+			print "len de rulesBase : ", len(rulesBase)
+			# if rulesBase and (i == len(rulesBase) - 1):
+			# 	i = 0
+			if checkRelevantRule(rulesBase[i], factsBase):
+				print "RelevantRule == 1"
+				applyRule(rulesBase[i], factsBase)
+			else:
+				# condition de sortie si RelevantRule == 0
+				print "RelevantRule == 0"
+				i += 1
+				continue
+			rulesBase.remove(rulesBase[i])
+		sys.exit(0)
+	if letter in factsBase:
+		print letter, " is ", letter.value
 	# for fact in factsBase:
 	# 	print fact.letter
 	# 	print fact.value
