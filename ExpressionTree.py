@@ -257,7 +257,7 @@ expRightR10 = Expression(nNOTR10)
 rule10 = Rules(expLeftR10, eqR10, expRightR10)
 
 # parcourir rulesBase pour trouver une regle executable // comparer rule1.exp1 avec factsBase
-# rulesBase = [rule0, rule1, rule2, rule3, rule4, rule5, rule6, rule6, rule7, rule8, rule9, rule10]
+# rulesBase = [rule0, rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10]
 rulesBase = [rule0, rule1, rule2, rule5, rule6, rule6, rule7, rule9, rule10]
 
 # pour executer la regle :
@@ -276,7 +276,7 @@ for letter in factsBase:
 
 
 ValueInNode = []
-getLetterNode(expLeftR8.node, ValueInNode)
+print getLetterNode(expLeftR8.node, ValueInNode)
 
 # test de findRelevantRule
 # print "lancement findRelevantRule : \n", findRelevantRule(rulesBase, factsBase)
