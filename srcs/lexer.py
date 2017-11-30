@@ -17,7 +17,7 @@ token_exprs = [
     (r'\?',         'QUERY')
 ]
 
-def lexer(str, number_line):
+def lex(str, number_line):
     pos = 0
     tokens = []
     while pos < len(str):

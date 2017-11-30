@@ -13,7 +13,7 @@ def processFile(fileaname):
 	with open(fileaname, 'r') as fd:
 		i = 0
 		for line in fd:
-			lexems.append(lexer(line, i))
+			lexems.append(lex(line, i))
 			i += 1
 
 	for lex in lexems:
